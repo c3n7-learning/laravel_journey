@@ -21,7 +21,8 @@ class Post extends Model
       ->send(Post::query())
       ->through([
         \App\QueryFilters\Active::class,
-        \App\QueryFilters\Sort::class
+        \App\QueryFilters\Sort::class,
+        \App\QueryFilters\MaxCount::class,
       ])
       ->thenReturn()
       ->get();
