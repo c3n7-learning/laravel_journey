@@ -4,16 +4,10 @@ namespace App\QueryFilters;
 
 use Closure;
 
-class Sort
+class Sort extends Filter
 {
-  public function handle($request, Closure $next)
+  protected function applyFilter($builder)
   {
-    if (!request()->has('sort')) {
-      return $next($request);
-    }
-    // localhost:8000/?sort=desc
-
-    $builder = $next($request);
-    return $builder->orderBy('title', request('sort'));
+    return $builder->orderBy('title', request($this->filterName()));
   }
 }
