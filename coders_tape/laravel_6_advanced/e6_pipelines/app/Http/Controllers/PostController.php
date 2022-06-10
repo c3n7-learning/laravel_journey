@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 
 class PostController extends Controller
 {
@@ -11,11 +12,15 @@ class PostController extends Controller
   {
     $posts = Post::query();
 
-    if (request()->has('active')) {
-      // localhost:8000/?active=1
-      $posts->where('active', request('active'));
-    }
+    $pipeline = app(Pipeline::class)
+      ->send(Post::query())
+      ->through([
+        \App\QueryFilters\Active::class
+      ])
+      ->thenReturn()
+      ->get();
 
+    dd($pipeline);
 
     if (request()->has('sort')) {
       // localhost:8000/?sort=asc
