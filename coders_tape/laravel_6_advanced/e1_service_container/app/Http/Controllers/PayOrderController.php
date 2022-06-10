@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Billing\PaymentGateway;
+use App\Orders\OrderDetails;
 use Illuminate\Http\Request;
 
 class PayOrderController extends Controller
 {
 
   // public function store()
-  public function store(PaymentGateway $paymentGateway)
+  public function store(OrderDetails $orderDetails, PaymentGateway $paymentGateway)
   {
 
     // $paymentGateway = new PaymentGateway("KES");
-    dd($paymentGateway->charge(200));
+    $order = $orderDetails->all();
+    dd($paymentGateway->charge(2500));
   }
 }
