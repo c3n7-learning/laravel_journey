@@ -12,23 +12,16 @@ class PostController extends Controller
   {
     $posts = Post::query();
 
-    $pipeline = app(Pipeline::class)
+    $posts = app(Pipeline::class)
       ->send(Post::query())
       ->through([
-        \App\QueryFilters\Active::class
+        \App\QueryFilters\Active::class,
+        \App\QueryFilters\Sort::class
       ])
       ->thenReturn()
       ->get();
 
-    dd($pipeline);
-
-    if (request()->has('sort')) {
-      // localhost:8000/?sort=asc
-      // localhost:8000/?sort=desc
-      $posts->orderBy('title', request('sort'));
-    }
-
-    $posts = $posts->get();
+    // dd($pipeline); 
 
     return view('posts.index', compact('posts'));
   }
