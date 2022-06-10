@@ -10,7 +10,7 @@ class PaymentGateway
   {
     return [
       "amount" => $amount,
-      'confirmation_number' => Str::random(),
+      'confirmation_number' => Str::random(10),
     ];
   }
 }
