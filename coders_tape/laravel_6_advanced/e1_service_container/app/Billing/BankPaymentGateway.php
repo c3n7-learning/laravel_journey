@@ -4,7 +4,7 @@ namespace App\Billing;
 
 use Str;
 
-class PaymentGateway
+class BankPaymentGateway implements PaymentGatewayContract
 {
 
   private $currency, $discount;

@@ -3,11 +3,12 @@
 namespace App\Orders;
 
 use App\Billing\PaymentGateway;
+use App\Billing\PaymentGatewayContract;
 
 class OrderDetails
 {
   private $paymentGateway;
-  public function __construct(PaymentGateway $paymentGateway)
+  public function __construct(PaymentGatewayContract $paymentGateway)
   {
     $this->paymentGateway = $paymentGateway;
   }
