@@ -10,18 +10,7 @@ class PostController extends Controller
 {
   public function index()
   {
-    $posts = Post::query();
-
-    $posts = app(Pipeline::class)
-      ->send(Post::query())
-      ->through([
-        \App\QueryFilters\Active::class,
-        \App\QueryFilters\Sort::class
-      ])
-      ->thenReturn()
-      ->get();
-
-    // dd($pipeline); 
+    $posts = Post::allPosts();
 
     return view('posts.index', compact('posts'));
   }
