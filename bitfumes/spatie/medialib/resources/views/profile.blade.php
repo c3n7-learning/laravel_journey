@@ -47,20 +47,20 @@
 
                 <div class="flex items-center mt-4 justify-between">
                   <div class="space-x-2 flex items-center">
-                    <a href=""
-                      onclick="event.preventDefault();document.getElementById('selectForm{{ $avatar->id }}').submit()"
-                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
-                      <i class="fa-solid fa-check"></i>
-                      <form action="{{ route('avatar.update', Auth::id()) }}"
-                        class="hidden"
-                        id="selectForm{{ $avatar->id }}" method="post">
-                        @csrf
-                        <input type="hidden" name="selectedAvatar"
-                          value="{{ $avatar->id }}" type="submit">
-                        @method('put')
-                        <button></button>
-                      </form>
-                    </a>
+
+
+                    <form action="{{ route('avatar.update', Auth::id()) }}"
+                      method="post">
+                      @csrf
+                      <input type="hidden" name="selectedAvatar"
+                        value="{{ $avatar->id }}" type="submit">
+                      @method('put')
+                      <button type="submit"
+                        class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
+                        <i class="fa-solid fa-check"></i>
+                      </button>
+                    </form>
+
                     <a href=""
                       class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
                       <i class="fa-solid fa-expand"></i>
@@ -70,10 +70,19 @@
                       <i class="fa-solid fa-download"></i>
                     </a>
                   </div>
-                  <a href=""
-                    class="rounded-full bg-red-600 h-7 w-7 text-sm text-red-50 flex items-center justify-center hover:scale-105">
-                    <i class="fa-solid fa-trash"></i>
-                  </a>
+
+                  <form action="{{ route('avatar.destroy', Auth::id()) }}"
+                    method="post">
+                    @csrf
+                    <input type="hidden" name="selectedAvatar"
+                      value="{{ $avatar->id }}" type="submit">
+                    @method('delete')
+                    <button type="submit"
+                      class="rounded-full bg-red-600 h-7 w-7 text-sm text-red-50 flex items-center justify-center hover:scale-105">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+
                 </div>
               </div>
             </div>
