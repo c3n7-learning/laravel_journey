@@ -40,7 +40,7 @@
 
           <x-slot name="content">
 
-            <x-dropdown-link :href="route('auth.profile')">
+            <x-dropdown-link :href="route('avatar.index')">
               {{ __('Profile') }}
             </x-dropdown-link>
 
@@ -96,7 +96,7 @@
       </div>
 
       <div class="mt-3 space-y-1">
-        <x-responsive-nav-link :href="route('auth.profile')">
+        <x-responsive-nav-link :href="route('avatar.index')">
           {{ __('Profile') }}
         </x-responsive-nav-link>
         <!-- Authentication -->
