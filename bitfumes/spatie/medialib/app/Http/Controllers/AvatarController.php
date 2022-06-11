@@ -37,7 +37,9 @@ class AvatarController extends Controller
   public function store(Request $request)
   {
     $user = Auth::user();
-    $user->addMedia($request->avatar)->toMediaCollection('avatar');
+    $user->addMedia($request->avatar)
+      ->withResponsiveImages()
+      ->toMediaCollection('avatar');
     return redirect()->back();
   }
 
@@ -86,8 +88,9 @@ class AvatarController extends Controller
    */
   public function destroy(Request $request, $id)
   {
+
     $user = Auth::user();
-    $user->avatar->where('id', $request->selectedAvatar)->delete();
+    $user->deleteMedia($request->selectedAvatar);
     return redirect()->back();
   }
 }

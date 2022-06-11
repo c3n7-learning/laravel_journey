@@ -57,7 +57,8 @@ class User extends Authenticatable implements HasMedia
         $this
           ->addMediaConversion('card')
           ->width(500)
-          ->height(500);
+          ->height(500)
+          ->withResponsiveImages();
         $this
           ->addMediaConversion('thumb')
           ->width(100)

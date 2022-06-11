@@ -35,12 +35,14 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-4 mt-6 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 mt-6 gap-6">
         @foreach ($avatars as $avatar)
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class=bg-white border-b border-gray-200">
-              <img src="{{ $avatar->getUrl('card') }}" alt=""
-                class="rounded h-72 w-full object-cover hover:scale-105 transition-all ease-out">
+              {{-- <img src="{{ $avatar->getUrl('card') }}" alt=""
+                class="rounded h-72 w-full object-cover hover:scale-105 transition-all ease-out"> --}}
+
+              {{ $avatar }}
 
               <div class="p-6 flex flex-col">
                 <span>Your Profile</span>
