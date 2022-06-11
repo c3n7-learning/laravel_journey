@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,5 +63,22 @@ class User extends Authenticatable implements HasMedia
           ->width(100)
           ->height(100);
       });
+  }
+
+  public function avatar()
+  {
+    return $this->hasOne(Media::class, 'id', 'avatar_id');
+  }
+
+  /**
+   * Get the user's first name.
+   *
+   * @return \Illuminate\Database\Eloquent\Casts\Attribute
+   */
+  protected function avatarUrl(): Attribute
+  {
+    return Attribute::make(
+      get: fn () => $this->avatar->getUrl('thumb'),
+    );
   }
 }

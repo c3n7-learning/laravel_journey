@@ -19,8 +19,11 @@
         </div>
       </div>
 
+
       <!-- Settings Dropdown -->
       <div class="hidden sm:flex sm:items-center sm:ml-6">
+        <img src="{{ Auth::user()->avatarUrl }}" alt=""
+          class="h-8 w-8 rounded-full mr-3">
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button
