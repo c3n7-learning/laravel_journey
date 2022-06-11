@@ -65,8 +65,9 @@
                       class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
                       <i class="fa-solid fa-expand"></i>
                     </a>
-                    <a href=""
-                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
+                    <a href="{{ $avatar->getUrl() }}"
+                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105"
+                      download>
                       <i class="fa-solid fa-download"></i>
                     </a>
                   </div>
