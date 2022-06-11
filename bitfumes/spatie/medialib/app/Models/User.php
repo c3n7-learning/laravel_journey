@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -50,6 +51,16 @@ class User extends Authenticatable implements HasMedia
     $this->addMediaCollection('avatar')
       ->acceptsFile(function (File $file) {
         return $file->mimeType === 'image/jpeg';
+      })
+      ->registerMediaConversions(function (Media $media) {
+        $this
+          ->addMediaConversion('card')
+          ->width(300)
+          ->height(300);
+        $this
+          ->addMediaConversion('thumb')
+          ->width(100)
+          ->height(100);
       });
   }
 }
