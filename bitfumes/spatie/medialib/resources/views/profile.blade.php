@@ -25,6 +25,23 @@
           </form>
         </div>
       </div>
+
+      <div class="grid grid-cols-4 mt-6 gap-6">
+        @foreach ($avatars as $avatar)
+          <div
+            class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:scale-105 transition-all ease-out">
+            <div class=bg-white border-b border-gray-200">
+              <img src="{{ $avatar->getUrl() }}" alt=""
+                class="rounded h-72 w-full object-cover">
+
+              <div class="p-6">
+                Your Profile
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+
     </div>
   </div>
 </x-app-layout>

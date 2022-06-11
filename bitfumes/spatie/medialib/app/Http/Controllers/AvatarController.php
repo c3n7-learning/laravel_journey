@@ -14,7 +14,8 @@ class AvatarController extends Controller
    */
   public function index()
   {
-    return view('profile');
+    $avatars = Auth::user()->getMedia('avatar');
+    return view('profile', compact('avatars'));
   }
 
   /**
