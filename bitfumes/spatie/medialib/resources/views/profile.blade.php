@@ -37,14 +37,44 @@
 
       <div class="grid grid-cols-4 mt-6 gap-6">
         @foreach ($avatars as $avatar)
-          <div
-            class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:scale-105 transition-all ease-out">
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class=bg-white border-b border-gray-200">
               <img src="{{ $avatar->getUrl('card') }}" alt=""
-                class="rounded h-72 w-full object-cover">
+                class="rounded h-72 w-full object-cover hover:scale-105 transition-all ease-out">
 
-              <div class="p-6">
-                Your Profile
+              <div class="p-6 flex flex-col">
+                <span>Your Profile</span>
+
+                <div class="flex items-center mt-4 justify-between">
+                  <div class="space-x-2 flex items-center">
+                    <a href=""
+                      onclick="event.preventDefault();document.getElementById('selectForm{{ $avatar->id }}').submit()"
+                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
+                      <i class="fa-solid fa-check"></i>
+                      <form action="{{ route('avatar.update', Auth::id()) }}"
+                        class="hidden"
+                        id="selectForm{{ $avatar->id }}" method="post">
+                        @csrf
+                        <input type="hidden" name="selectedAvatar"
+                          value="{{ $avatar->id }}" type="submit">
+                        @method('put')
+                        <button></button>
+                      </form>
+                    </a>
+                    <a href=""
+                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
+                      <i class="fa-solid fa-expand"></i>
+                    </a>
+                    <a href=""
+                      class="rounded-full bg-gray-800 h-7 w-7 text-sm text-white flex items-center justify-center hover:scale-105">
+                      <i class="fa-solid fa-download"></i>
+                    </a>
+                  </div>
+                  <a href=""
+                    class="rounded-full bg-red-600 h-7 w-7 text-sm text-red-50 flex items-center justify-center hover:scale-105">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
