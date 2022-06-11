@@ -38,7 +38,6 @@ class AvatarController extends Controller
   {
     $user = Auth::user();
     $user->addMedia($request->avatar)
-      ->withResponsiveImages()
       ->toMediaCollection('avatar');
     return redirect()->back();
   }
