@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 
 class AvatarController extends Controller
@@ -34,7 +35,9 @@ class AvatarController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $user = Auth::user();
+    $user->addMedia($request->avatar)->toMediaCollection('avatar');
+    return redirect()->back();
   }
 
   /**
