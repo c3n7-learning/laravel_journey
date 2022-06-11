@@ -40,7 +40,7 @@
           <div
             class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:scale-105 transition-all ease-out">
             <div class=bg-white border-b border-gray-200">
-              <img src="{{ $avatar->getUrl() }}" alt=""
+              <img src="{{ $avatar->getUrl('card') }}" alt=""
                 class="rounded h-72 w-full object-cover">
 
               <div class="p-6">
