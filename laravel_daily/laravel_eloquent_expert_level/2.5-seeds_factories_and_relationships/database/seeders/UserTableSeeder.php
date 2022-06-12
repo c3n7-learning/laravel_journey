@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
     ]);
 
     \App\Models\User::factory(10)->create()->each(function ($user) {
-      \App\Models\Article::factory(20)->create([
+      \App\Models\Article::factory()->create([
         "user_id" => $user->id
       ]);
     });
