@@ -35,6 +35,8 @@ class ArticleController extends Controller
    */
   public function store(Request $request)
   {
+    Article::create($request->only(['title', 'article_text']));
+    return redirect()->back();
   }
 
   /**
