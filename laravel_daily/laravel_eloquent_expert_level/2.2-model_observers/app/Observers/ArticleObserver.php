@@ -6,6 +6,18 @@ use App\Models\Article;
 
 class ArticleObserver
 {
+
+  /**
+   * Handle the Article "creating" event.
+   *
+   * @param  \App\Models\Article  $article
+   * @return void
+   */
+  public function creating(Article $article)
+  {
+    $article->title = strtoupper($article->title);
+  }
+
   /**
    * Handle the Article "created" event.
    *
