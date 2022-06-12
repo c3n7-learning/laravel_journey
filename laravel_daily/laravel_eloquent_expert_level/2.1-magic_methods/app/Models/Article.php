@@ -17,4 +17,7 @@ class Article extends Model
   protected $guarded = [
     "id"
   ];
+
+
+  protected $perPage = 10;
 }
