@@ -14,7 +14,8 @@ class ArticleController extends Controller
    */
   public function index()
   {
-    $articles = Article::paginate();
+    $articles = Article::orderByDesc('id')
+      ->paginate();
 
     return view('articles.index', ["articles" => $articles]);
   }
@@ -37,8 +38,16 @@ class ArticleController extends Controller
    */
   public function store(Request $request)
   {
-    Article::create($request->only(['title', 'article_text']));
-    return redirect()->back();
+    // $article = Article::where('title', $request->title)->first();
+    // if (!$article) {
+    //   Article::create($request->only(['title', 'article_text']));
+    // }
+
+    $article = Article::firstOrCreate(
+      ['title' => $request->title],
+      ['article_text' => $request->article_text]
+    );
+    return redirect()->route('articles.index');
   }
 
   /**
