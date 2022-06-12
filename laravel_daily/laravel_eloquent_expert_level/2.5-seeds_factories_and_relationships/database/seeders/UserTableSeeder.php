@@ -20,9 +20,12 @@ class UserTableSeeder extends Seeder
     ]);
 
     \App\Models\User::factory(10)->create()->each(function ($user) {
-      \App\Models\Article::factory()->create([
-        "user_id" => $user->id
-      ]);
+      // \App\Models\Article::factory()->create([
+      //   "user_id" => $user->id
+      // ]);
+
+      // $user->articles()->save(\App\Models\Article::factory()->make());
+      $user->articles()->saveMany(\App\Models\Article::factory(3)->make());
     });
   }
 }
