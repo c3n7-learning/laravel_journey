@@ -43,10 +43,25 @@ class ArticleController extends Controller
     //   Article::create($request->only(['title', 'article_text']));
     // }
 
-    $article = Article::firstOrCreate(
+    // $article = Article::firstOrCreate(
+    //   ['title' => $request->title],
+    //   ['article_text' => $request->article_text]
+    // );
+
+    // $article = Article::firstOrNew(
+    //   ['title' => $request->title],
+    //   ['article_text' => $request->article_text]
+    // );
+    // $article->field = $value;
+    // $article->save();
+
+
+    $article = Article::updateOrCreate(
       ['title' => $request->title],
       ['article_text' => $request->article_text]
     );
+
+
     return redirect()->route('articles.index');
   }
 
