@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserTableSeeder extends Seeder
+class ArticleTableSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -14,11 +14,6 @@ class UserTableSeeder extends Seeder
    */
   public function run()
   {
-    \App\Models\User::factory()->create([
-      'name' => 'Test User',
-      'email' => 'test@example.com',
-    ]);
-
-    \App\Models\User::factory(50)->create();
+    \App\Models\Article::factory(1000)->create();
   }
 }
