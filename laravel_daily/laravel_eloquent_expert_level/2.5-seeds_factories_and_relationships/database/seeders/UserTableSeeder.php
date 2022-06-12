@@ -19,6 +19,10 @@ class UserTableSeeder extends Seeder
       'email' => 'test@example.com',
     ]);
 
-    \App\Models\User::factory(10)->create();
+    \App\Models\User::factory(10)->create()->each(function ($user) {
+      \App\Models\Article::factory(20)->create([
+        "user_id" => $user->id
+      ]);
+    });
   }
 }
