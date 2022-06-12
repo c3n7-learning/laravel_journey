@@ -28,4 +28,12 @@ class Article extends Model
       get: fn () => Str::kebab($this->title . " " . Str::random(4)),
     );
   }
+
+  protected function title(): Attribute
+  {
+    return Attribute::make(
+      get: fn ($value) => Str::title($value),
+      set: fn ($value) => Str::lower($value),
+    );
+  }
 }

@@ -17,7 +17,7 @@
       @foreach ($articles as $article)
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            {{ $article->random_title }}
+            {{ $article->title }} - {{ $article->random_title }}
 
             <p class="text-gray-600">
               {{ $article->article_text }}
