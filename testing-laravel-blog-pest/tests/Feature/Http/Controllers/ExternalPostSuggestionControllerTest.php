@@ -2,34 +2,17 @@
 
 use App\Http\Controllers\ExternalPostSuggestionController;
 use App\Mail\ExternalPostSuggestedMail;
-use App\Models\BlogPost;
 use App\Models\ExternalPost;
 
 use function Pest\Laravel\assertDatabaseHas;
 
-it('can render the homepage', function () {
-  /** @var Illuminate\Foundation\Testing\TestCase $this */
-  $this->get('/')
-    ->assertSee('My Blog');
-});
 
-
-it('will only show published blogposts', function () {
-  /** @var Illuminate\Foundation\Testing\TestCase $this */
-  $publishedPost = BlogPost::factory()->published()->create();
-
-  $draftPost = BlogPost::factory()->draft()->create();
-
-
-  $this->get('/')
-    ->assertSee($publishedPost->title)
-    ->assertDontSee($draftPost->title);
+beforeEach(function () {
+  Mail::fake();
 });
 
 it('can accept suggestions', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
-
-  Mail::fake();
 
   $externalPostAttributes = [
     'title' => 'My Title',
@@ -62,8 +45,6 @@ it('can accept suggestions', function () {
 
 it('will not accept a suggestion with invalid input', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
-
-  Mail::fake();
 
   $this->post(
     action(ExternalPostSuggestionController::class),
