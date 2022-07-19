@@ -8,27 +8,31 @@ use League\CommonMark\MarkdownConverter;
 
 class BlogPostController
 {
-    public function index()
-    {
-        $posts = BlogPost::query()
-            ->orderByDesc('date')
-            ->wherePublished()
-            ->paginate(15);
+  public function index()
+  {
+    $posts = BlogPost::query()
+      ->orderByDesc('date')
+      ->wherePublished()
+      ->paginate(15);
 
-        $recents = ExternalPost::mostRecent()->limit(6)->get();
-        return view('blog.index', [
-            'posts' => $posts,
-            'recents' => $recents,
-        ]);
-    }
+    // $posts = [];
+    // dd($posts);
 
-    public function show(BlogPost $post, MarkdownConverter $converter)
-    {
-        $body = $converter->convertToHtml($post->body);
+    $recents = ExternalPost::mostRecent()->limit(6)->get();
 
-        return view('blog.show', [
-            'post' => $post,
-            'body' => $body,
-        ]);
-    }
+    return view('blog.index', [
+      'posts' => $posts,
+      'recents' => $recents,
+    ]);
+  }
+
+  public function show(BlogPost $post, MarkdownConverter $converter)
+  {
+    $body = $converter->convertToHtml($post->body);
+
+    return view('blog.show', [
+      'post' => $post,
+      'body' => $body,
+    ]);
+  }
 }
