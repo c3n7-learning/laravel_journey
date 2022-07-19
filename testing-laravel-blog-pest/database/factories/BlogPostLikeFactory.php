@@ -9,12 +9,12 @@ use Ramsey\Uuid\Uuid;
 
 class BlogPostLikeFactory extends Factory
 {
-    protected $model = BlogPostLike::class;
+  protected $model = BlogPostLike::class;
 
-    public function definition(): array
-    {
-        return [
-            'liker_uuid' => (string) Uuid::uuid4(),
-        ];
-    }
+  public function definition(): array
+  {
+    return [
+      'liker_uuid' => (string) Uuid::uuid4(),
+    ];
+  }
 }
