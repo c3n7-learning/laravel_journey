@@ -7,18 +7,29 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateExternalPostsTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('external_posts', function (Blueprint $table) {
-            $table->id();
+  public function up()
+  {
+    Schema::create('external_posts', function (Blueprint $table) {
+      $table->id();
 
-            $table->string('url');
-            $table->string('domain');
-            $table->string('title');
-            $table->string('date');
-            $table->string('status')->default(ExternalPostStatus::PENDING()->value);
+      $table->string('url');
+      $table->string('domain');
+      $table->string('title');
+      $table->string('date');
+      $table->string('status')->default(ExternalPostStatus::PENDING()->value);
 
-            $table->timestamps();
-        });
-    }
+      $table->timestamps();
+    });
+  }
+
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('external_posts');
+  }
 }

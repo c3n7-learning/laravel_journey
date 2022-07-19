@@ -6,15 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRedirectsTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('redirects', function (Blueprint $table) {
-            $table->id();
+  public function up()
+  {
+    Schema::create('redirects', function (Blueprint $table) {
+      $table->id();
 
-            $table->string('from');
-            $table->string('to');
+      $table->string('from');
+      $table->string('to');
 
-            $table->timestamps();
-        });
-    }
+      $table->timestamps();
+    });
+  }
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('redirects');
+  }
 }
