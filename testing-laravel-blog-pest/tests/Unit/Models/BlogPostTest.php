@@ -27,11 +27,14 @@ it('can determine if a blogpost is published', function () {
 it('has a scope to retrieve all published blogposts', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
+  // arrange
   $publishedPost = BlogPost::factory()->published()->create();
   $draftPosts =  BlogPost::factory()->draft()->create();
 
+  // act
   $publishedPosts = BlogPost::wherePublished()->get();
 
+  // test
   expect($publishedPosts)->toHaveCount(1);
   expect($publishedPosts[0]->id)->toEqual($publishedPost->id);
 });
