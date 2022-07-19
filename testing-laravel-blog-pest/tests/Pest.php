@@ -12,30 +12,30 @@ use Illuminate\Support\Facades\Bus;
 use App\Jobs\CreateOgImageJob;
 
 uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
-    ->beforeEach(function() {
-        Bus::fake(CreateOgImageJob::class);
-    })
-    ->in('Unit', 'Feature');
-uses(DuskTestCase::class)->in('Browser');
+  // ->beforeEach(function() {
+  //     Bus::fake(CreateOgImageJob::class);
+  // })
+  ->in('Unit', 'Feature');
+// uses(DuskTestCase::class)->in('Browser');
 
-function login(User $user = null)
-{
-    actingAs($user ?? User::factory()->admin()->create());
-}
+// function login(User $user = null)
+// {
+//     actingAs($user ?? User::factory()->admin()->create());
+// }
 
 function createRequest($method, $uri): Request
 {
-    $symfonyRequest = SymfonyRequest::create(
-        $uri,
-        $method,
-    );
+  $symfonyRequest = SymfonyRequest::create(
+    $uri,
+    $method,
+  );
 
-    return Request::createFromBase($symfonyRequest);
+  return Request::createFromBase($symfonyRequest);
 }
 
 function getFeed(string $title = 'test'): string
 {
-    return  <<<XML
+  return  <<<XML
        <feed xmlns="http://www.w3.org/2005/Atom">
            <id>https://example.com/rss</id>
            <link href="https://example.com/rss"/>
@@ -77,17 +77,16 @@ function getFeed(string $title = 'test'): string
        XML;
 }
 
-expect()->extend('isForbidden', function() {
-    return expect($this->value->isForbidden())->toBeTrue();
+expect()->extend('isForbidden', function () {
+  return expect($this->value->isForbidden())->toBeTrue();
 });
 
-expect()->extend('isSuccessfulOrRedirect', function() {
-    return expect($this->value->status())->toBeIn([200, 301, 302]);
+expect()->extend('isSuccessfulOrRedirect', function () {
+  return expect($this->value->status())->toBeIn([200, 301, 302]);
 });
 
-expect()->extend('toBeInTheRange', function(int $min, int $max) {
-    return $this
-        ->toBeGreaterThanOrEqual($min)
-        ->toBeLessThanOrEqual($max);
+expect()->extend('toBeInTheRange', function (int $min, int $max) {
+  return $this
+    ->toBeGreaterThanOrEqual($min)
+    ->toBeLessThanOrEqual($max);
 });
-
