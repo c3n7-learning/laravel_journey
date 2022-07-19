@@ -28,14 +28,14 @@ class BlogPostFactory extends Factory
   public function published()
   {
     return $this->state([
-      'status' =>  BlogPostStatus::PUBLISHED(),
+      'status' =>  BlogPostStatus::PUBLISHED()
     ]);
   }
 
   public function draft()
   {
     return $this->state([
-      'status' =>  BlogPostStatus::DRAFT(),
+      'status' =>  BlogPostStatus::DRAFT()
     ]);
   }
 }
