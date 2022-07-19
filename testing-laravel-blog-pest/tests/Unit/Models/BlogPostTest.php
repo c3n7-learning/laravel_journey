@@ -1,0 +1,37 @@
+<?php
+
+use App\Models\BlogPost;
+
+it('adds a slug when a blog post is created', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+
+  $blogPost = BlogPost::factory()->create([
+    'title' => 'My blogpost'
+  ]);
+
+  expect($blogPost->slug)->toEqual('my-blogpost');
+});
+
+
+it('can determine if a blogpost is published', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+
+  $publishedPost = BlogPost::factory()->published()->create();
+  expect($publishedPost->isPublished())->toBeTrue();
+
+  $dratPost = BlogPost::factory()->draft()->create();
+  expect($dratPost->isPublished())->toBeFalse();
+});
+
+
+it('has a scope to retrieve all published blogposts', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+
+  $publishedPost = BlogPost::factory()->published()->create();
+  $draftPosts =  BlogPost::factory()->draft()->create();
+
+  $publishedPosts = BlogPost::wherePublished()->get();
+
+  expect($publishedPosts)->toHaveCount(1);
+  expect($publishedPosts[0]->id)->toEqual($publishedPost->id);
+});

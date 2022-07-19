@@ -56,9 +56,9 @@ class BlogPost extends Model implements Feedable
 
   public function scopeWherePublished(Builder $builder): void
   {
-    // $builder
-    //   ->where('status', BlogPostStatus::PUBLISHED())
-    //   ->where('date', '<=', now()->toDateTimeString());
+    $builder
+      ->where('status', BlogPostStatus::PUBLISHED())
+      ->where('date', '<=', now()->toDateTimeString());
   }
 
   public function publish(): self
