@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\BlogPost;
+use App\Models\BlogPostLike;
 
 it('adds a slug when a blog post is created', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
@@ -37,4 +38,14 @@ it('has a scope to retrieve all published blogposts', function () {
   // test
   expect($publishedPosts)->toHaveCount(1);
   expect($publishedPosts[0]->id)->toEqual($publishedPost->id);
+});
+
+it('can create models with relationships', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+
+  $post = BlogPost::factory()
+    ->has(BlogPostLike::factory()->count(5), 'postLikes')
+    ->create();
+
+  expect($post->postLikes)->toHaveCount(5);
 });

@@ -11,26 +11,26 @@ use Illuminate\Support\Facades\Mail;
 
 class ExternalPostSuggestionController
 {
-    public function __invoke(ExternalPostSuggestionRequest $request)
-    {
-        $validated = $request->validated();
+  public function __invoke(ExternalPostSuggestionRequest $request)
+  {
+    $validated = $request->validated();
 
-        $title = $validated['title'];
+    $title = $validated['title'];
 
-        $url = $validated['url'];
+    $url = $validated['url'];
 
-        ExternalPost::create([
-            'title' => $title,
-            'url' => $url,
-            'domain' => str_replace('www.', '', parse_url($validated['url'], PHP_URL_HOST)),
-            'date' => now(),
-            'status' => ExternalPostStatus::PENDING(),
-        ]);
+    ExternalPost::create([
+      'title' => $title,
+      'url' => $url,
+      'domain' => str_replace('www.', '', parse_url($validated['url'], PHP_URL_HOST)),
+      'date' => now(),
+      'status' => ExternalPostStatus::PENDING(),
+    ]);
 
-        Mail::to('admin@yourblog.com')->send(new ExternalPostSuggestedMail($title, $url));
+    Mail::to('admin@yourblog.com')->send(new ExternalPostSuggestedMail($title, $url));
 
-        flash('Thanks for your suggestion', 'bg-ink text-white');
+    flash('Thanks for your suggestion', 'bg-ink text-white');
 
-        return redirect()->action([BlogPostController::class, 'index']);
-    }
+    return redirect()->action([BlogPostController::class, 'index']);
+  }
 }
