@@ -31,9 +31,37 @@ it('will update a blog post when an admin is logged in', function () {
 
 
 it('validates required fields on the post edit form', function () {
-  $post = BlogPost::factory()->create([
-    'title' => 'test'
-  ]);
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+  $post = BlogPost::factory()->create();
 
-  // post(action([BlogPostAdminController::class, 'update'], $post->slug), []);
+  login();
+
+  post(action([BlogPostAdminController::class, 'update'], $post->slug), [])
+    ->assertSessionHasErrors([
+      'title', 'author', 'body', 'date'
+    ]);
+
+  post(action([BlogPostAdminController::class, 'update'], $post->slug), [
+    'title' => 'test',
+    'author' => $post->author,
+    'body' => $post->body,
+    'date' => $post->date->format('Y-m-d')
+  ])
+    ->assertSessionHasNoErrors();
+});
+
+
+it('will validate the date format on the edit blog post screen', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase $this */
+  $post = BlogPost::factory()->create();
+
+  login();
+
+  post(action([BlogPostAdminController::class, 'update'], $post->slug), [
+    'title' => 'test',
+    'author' => $post->author,
+    'body' => $post->body,
+    'date' => '02/02/2022'
+  ])->dumpSession()
+    ->assertSessionHasErrors(['date' => 'The date does not match the format Y-m-d.']);
 });
