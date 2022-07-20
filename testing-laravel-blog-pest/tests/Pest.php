@@ -17,10 +17,12 @@ uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
   ->in('Unit', 'Feature');
 // uses(DuskTestCase::class)->in('Browser');
 
-// function login(User $user = null)
-// {
-//     actingAs($user ?? User::factory()->admin()->create());
-// }
+function login(User $user = null)
+{
+  // https://github.com/bmewburn/vscode-intelephense/issues/2163#issuecomment-1059662486
+  // actingAs(User::factory()->create());
+  test()->actingAs($user ?? User::factory()->admin()->create());
+}
 
 function custActingAs($user, $guard = null)
 {

@@ -10,10 +10,12 @@ use function Pest\Laravel\post;
 it('will update a blog post when an admin is logged in', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
-  $post = BlogPost::factory()->make();
+  $post = BlogPost::factory()->create([
+    'title' => 'test'
+  ]);
 
-  $sendRequest = fn () =>   post(action([BlogPostAdminController::class, 'update'], $post->slug), [
-    'title' => 'test',
+  $sendRequest = fn () => post(action([BlogPostAdminController::class, 'update'], $post->slug), [
+    'title' => $post->title,
     'author' => $post->author,
     'body' => $post->body,
     'date' => $post->date->format('Y-m-d')
@@ -21,19 +23,13 @@ it('will update a blog post when an admin is logged in', function () {
 
   $sendRequest()->assertRedirect(route('login'));
 
-  // https://github.com/bmewburn/vscode-intelephense/issues/2163#issuecomment-1059662486
-  // actingAs(User::factory()->create());
-  test()->actingAs(User::factory()->create());
+  login();
 
-  $sendRequest();
+  $sendRequest()->assertRedirect(action([BlogPostAdminController::class, 'edit'], $post->slug));
 
-  $post->refresh();
-
-  expect($post->title)->toBe('test');
-
-  // assertDatabaseHas(BlogPost::class, [
-  //   'title' => $post->title,
-  //   'author' => $post->author,
-  //   'body' => $post->body,
-  // ]);
+  assertDatabaseHas(BlogPost::class, [
+    'title' => $post->title,
+    'author' => $post->author,
+    'body' => $post->body,
+  ]);
 });
