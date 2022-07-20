@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Tests\CreatesApplication;
 use Tests\DuskTestCase;
-use function Pest\Laravel\actingAs;
 use Illuminate\Support\Facades\Bus;
 use App\Jobs\CreateOgImageJob;
 
@@ -22,6 +21,11 @@ uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
 // {
 //     actingAs($user ?? User::factory()->admin()->create());
 // }
+
+function custActingAs($user, $guard = null)
+{
+  return test()->actingAs($user, $guard);
+}
 
 function createRequest($method, $uri): Request
 {
