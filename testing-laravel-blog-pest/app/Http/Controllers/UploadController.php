@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController
 {
-    public function __invoke(UploadRequest $request)
-    {
-        $file = $request->file('file');
+  public function __invoke(UploadRequest $request)
+  {
+    $file = $request->file('file');
 
-        $timestamp = now()->format('Y-m-d-H-i-s');
+    $timestamp = now()->format('Y-m-d-H-i-s');
 
-        $filename = "{$timestamp}-{$file->getClientOriginalName()}";
+    $filename = "{$timestamp}-{$file->getClientOriginalName()}";
 
-        Storage::disk('public')->putFileAs("uploads", $file, $filename);
+    Storage::disk('public')->putFileAs("uploads", $file, $filename);
 
-        return parse_url(Storage::disk('public')->url("uploads/{$filename}"), PHP_URL_PATH);
-    }
+    return parse_url(Storage::disk('public')->url("uploads/{$filename}"), PHP_URL_PATH);
+  }
 }
