@@ -10,12 +10,10 @@ use function Pest\Laravel\post;
 it('will update a blog post when an admin is logged in', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
-  $post = BlogPost::factory()->create([
-    'title' => 'test'
-  ]);
+  $post = BlogPost::factory()->make();
 
   $sendRequest = fn () =>   post(action([BlogPostAdminController::class, 'update'], $post->slug), [
-    'title' => $post->title,
+    'title' => 'test',
     'author' => $post->author,
     'body' => $post->body,
     'date' => $post->date->format('Y-m-d')
@@ -29,9 +27,13 @@ it('will update a blog post when an admin is logged in', function () {
 
   $sendRequest();
 
-  assertDatabaseHas(BlogPost::class, [
-    'title' => $post->title,
-    'author' => $post->author,
-    'body' => $post->body,
-  ]);
+  $post->refresh();
+
+  expect($post->title)->toBe('test');
+
+  // assertDatabaseHas(BlogPost::class, [
+  //   'title' => $post->title,
+  //   'author' => $post->author,
+  //   'body' => $post->body,
+  // ]);
 });
