@@ -3,6 +3,8 @@
 use App\Models\BlogPost;
 use App\Models\BlogPostLike;
 
+use function Spatie\PestPluginTestTime\testTime;
+
 it('adds a slug when a blog post is created', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
@@ -28,18 +30,31 @@ it('can determine if a blogpost is published', function () {
 it('has a scope to retrieve all published blogposts', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
-  // arrange
+  testTime()->freeze();
+  // ARRANGE
   $publishedPost = BlogPost::factory()->published()->create([
-    'date' => now()->addYear(),
+    'date' => now(),
   ]);
-  $draftPosts =  BlogPost::factory()->draft()->create();
 
-  // act
+  $draftPost = BlogPost::factory()->draft()->create([
+    'date' => now(),
+  ]);
+
+
+  // ACT
+  // When the test is run, wherePublished will be one second behind, so the posts will be in the future
+  testTime()->subSecond();
+  $publishedPosts = BlogPost::wherePublished()->get();
+  expect($publishedPosts)->toHaveCount(0);
+
+
+  testTime()->addSecond();
   $publishedPosts = BlogPost::wherePublished()->get();
 
-  // test
-  expect($publishedPosts)->toHaveCount(1);
-  expect($publishedPosts[0]->id)->toEqual($publishedPost->id);
+  // ASSERT
+  expect($publishedPosts)->toHaveCount(1)
+    ->and($publishedPosts[0]->id)
+    ->toEqual($publishedPost->id);
 });
 
 
