@@ -29,7 +29,9 @@ it('has a scope to retrieve all published blogposts', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
 
   // arrange
-  $publishedPost = BlogPost::factory()->published()->create();
+  $publishedPost = BlogPost::factory()->published()->create([
+    'date' => now()->addYear(),
+  ]);
   $draftPosts =  BlogPost::factory()->draft()->create();
 
   // act
@@ -39,6 +41,7 @@ it('has a scope to retrieve all published blogposts', function () {
   expect($publishedPosts)->toHaveCount(1);
   expect($publishedPosts[0]->id)->toEqual($publishedPost->id);
 });
+
 
 it('can create models with relationships', function () {
   /** @var Illuminate\Foundation\Testing\TestCase $this */
