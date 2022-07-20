@@ -63,6 +63,6 @@ it('will validate the date format on the edit blog post screen', function () {
     'author' => $this->post->author,
     'body' => $this->post->body,
     'date' => '02/02/2022'
-  ])->dumpSession()
+  ])
     ->assertSessionHasErrors(['date' => 'The date does not match the format Y-m-d.']);
 });

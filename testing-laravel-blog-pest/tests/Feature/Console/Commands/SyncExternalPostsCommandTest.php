@@ -23,6 +23,4 @@ it('can sync external feeds', function () {
 
   RssRepositoryFake::expectFeedUrlsFetched($urls);
   RssRepositoryFake::expectFeedUrlsFetchedCount(3);
-
-  // expect(ExternalPost::count())->toBe(3);
 });

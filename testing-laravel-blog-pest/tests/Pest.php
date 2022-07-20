@@ -6,9 +6,6 @@ use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Tests\CreatesApplication;
-use Tests\DuskTestCase;
-use Illuminate\Support\Facades\Bus;
-use App\Jobs\CreateOgImageJob;
 
 uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
   // ->beforeEach(function() {
