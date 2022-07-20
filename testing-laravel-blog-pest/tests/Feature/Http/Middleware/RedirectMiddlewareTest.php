@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use function Pest\Laravel\get;
 
 test('test the middleware in isolation', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase this */
 
+  /** @var $response  */
   $response = (new RedirectMiddleware())->handle(
     createRequest('get', '/'),
     fn () => new Response()
@@ -32,6 +34,8 @@ test('test the middleware in isolation', function () {
 
 // test the middleware in full app
 it('will perform the right redirects', function () {
+  /** @var Illuminate\Foundation\Testing\TestCase this */
+
   // Create a route to use in this test.
   Route::get('my-test-route', fn () => 'ok')
     ->middleware(RedirectMiddleware::class);
