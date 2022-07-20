@@ -10,43 +10,47 @@ use Spatie\Fork\Fork;
 
 class SyncExternalPostsCommand extends Command
 {
-    protected $signature = 'sync:externals {--async}';
+  protected $signature = 'sync:externals {--async}';
 
-    protected $description = 'Sync external RSS feeds';
+  protected $description = 'Sync external RSS feeds';
 
-    public function handle(SyncExternalPostAction $sync)
-    {
-        $feeds = config('services.external_feeds');
+  public function handle(SyncExternalPostAction $sync)
+  {
+    $feeds = config('services.external_feeds');
 
-        $this->info('Fetching ' . count($feeds) . ' feeds');
+    $this->info('Fetching ' . count($feeds) . ' feeds');
 
-        $this->option('async')
-            ? $this->syncAsync($feeds, $sync)
-            : $this->sync($feeds, $sync);
+    // $this->option('async')
+    //   ? $this->syncAsync($feeds, $sync)
+    //   : $this->sync($feeds, $sync);
 
-        $this->info('Done');
+    foreach ($feeds as $feed) {
+      $sync($feed);
     }
 
-    private function syncAsync(array $feeds, SyncExternalPostAction $sync): void
-    {
-        Fork::new()
-            ->before(child: fn () => DB::connection('mysql')->reconnect())
-            ->concurrent(10)
-            ->run(...array_map(function (string $url) use ($sync) {
-                return function () use ($sync, $url) {
-                    $this->comment("\t- $url");
+    $this->info('Done');
+  }
 
-                    $sync($url);
-                };
-            }, $feeds));
+  private function syncAsync(array $feeds, SyncExternalPostAction $sync): void
+  {
+    Fork::new()
+      ->before(child: fn () => DB::connection('mysql')->reconnect())
+      ->concurrent(10)
+      ->run(...array_map(function (string $url) use ($sync) {
+        return function () use ($sync, $url) {
+          $this->comment("\t- $url");
+
+          $sync($url);
+        };
+      }, $feeds));
+  }
+
+  private function sync(array $feeds, SyncExternalPostAction $sync)
+  {
+    foreach ($feeds as $url) {
+      $this->comment("\t- $url");
+
+      $sync($url);
     }
-
-    private function sync(array $feeds, SyncExternalPostAction $sync)
-    {
-        foreach ($feeds as $url) {
-            $this->comment("\t- $url");
-
-            $sync($url);
-        }
-    }
+  }
 }
